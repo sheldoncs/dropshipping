@@ -10,5 +10,6 @@ export const OfferProfile = gql`
     amount: Int
     width: Int
     code: String
+    categoryid: Int
   }
 `;

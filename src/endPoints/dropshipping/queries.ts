@@ -9,6 +9,10 @@ export const DropshippingQueries = {
     const allCategories = await knex("category");
     return allCategories;
   },
+  getOffer: async (id: number) => {
+    const offer = await knex("offers").where({ id }).first();
+    return offer;
+  },
   getCategory: async (category: string) => {
     const singleCategory = await knex("category")
       .join("headers", "category.id", "=", "headers.categoryid")

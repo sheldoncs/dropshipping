@@ -6,6 +6,7 @@ import helmet from "helmet";
 import passport from "passport";
 import { socketServer } from "./chatServer/chatServer";
 import { chatListener } from "./chatServer/chatServer";
+import compression from "compression";
 // import multer from "multer";
 
 import { resolvers } from "./graphql/resolvers";
@@ -16,16 +17,23 @@ import * as jwt from "jsonwebtoken";
 
 import "dotenv/config";
 import * as dotenv from "dotenv";
-// import { Signup, localPassport } from "./auth/localPassport";
+import { Signup, localPassport } from "./auth/localPassport";
+import { GooglePassport } from "./auth/googlePassport";
 import bodyParser from "body-parser";
+import { nextTick } from "process";
+
+localPassport;
+GooglePassport;
 
 dotenv.config();
 const app = express();
 
 let io = socketServer(app);
-chatListener(io);
+// chatListener(io);
 app.use(express.json());
 app.use(passport.initialize());
+app.use(compression());
+app.use(cors());
 
 var router = express.Router();
 
@@ -38,26 +46,36 @@ app.use(
 );
 app.use(logger("dev"));
 
-// app.use(cors());
+var corsOptions = {
+  origin: "*",
+  optionsSuccessStatus: 200, // For legacy browser support
+  methods: "GET",
+};
 
-// app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // app.get(
-//   "/auth/linkedin",
-//   passport.authenticate("linkedin", {
-//     session: false,
-//     scope: ["r_emailaddress", "r_liteprofile"],
-//   })
+//   "/auth/google",
+//   passport.authenticate("google", { scope: ["profile", "email"] })
 // );
-
-// app.post("/auth/signup", Signup);
-
-// app.post(
-//   "/login",
-//   passport.authenticate("local", { session: false }),
+// // ,
+// //   function (req, res) {
+// //     // Successful authentication, redirect success.
+// //     res.redirect("/success");
+// //   }
+// app.get(
+//   "/auth/google/callback",
+//   passport.authenticate("google", { session: false, failureRedirect: "/" }),
 //   tokenGenerator
 // );
+
+app.post("/auth/signup", Signup);
+
+app.post(
+  "/login",
+  passport.authenticate("local", { session: false }),
+  tokenGenerator
+);
 
 const apolloServer = new ApolloServer({
   typeDefs,

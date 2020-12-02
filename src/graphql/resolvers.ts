@@ -2,7 +2,8 @@ import {
   getCategory,
   getAllCategories,
 } from "./resolvers/dropshipping/category";
-import { getAllOffers } from "./resolvers/dropshipping/offers";
+import { getAllOffers, getOffer } from "./resolvers/dropshipping/offers";
+import { addUserInfo } from "./resolvers/dropshipping/user";
 import {
   getAllItems,
   getPriceOptions,
@@ -14,5 +15,7 @@ export const resolvers = {
     getAllOffers,
     getAllItems,
     getPriceOptions,
+    getOffer,
   },
+  Mutation: { addUserInfo },
 };

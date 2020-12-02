@@ -5,6 +5,7 @@ export const Query = gql`
     getCategory(category: String): Category
     getAllCategories: [Menu!]
     getAllOffers: [Offer!]
+    getOffer(id: Int): Offer
     getAllItems: [ItemPrice!]
     getPriceOptions: [PriceOptions!]
   }

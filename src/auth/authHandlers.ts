@@ -1,5 +1,5 @@
 import * as jwt from "jsonwebtoken";
-
+import { LoginQueries } from "../endPoints/logins/queries";
 import { AuthenticationError } from "apollo-server-express";
 
 const generateJWT = (
@@ -15,14 +15,22 @@ export const tokenGenerator = (req, res) => {
 
   const { password, ...rest } = user[0] as any;
 
-  console.log("password", password);
-
   let expiresIn = 86400;
 
   const jwtToken = generateJWT(rest, process.env.jwtSecret, { expiresIn });
+  let profile = LoginQueries.getLoginByEmail(rest.email);
 
-  console.log("jwtToken", jwtToken);
-  res.status(200).json({ auth: true, token: jwtToken, user: rest.email });
+  profile.then((data) => {
+    res.status(200).json({
+      auth: true,
+      token: jwtToken,
+      user: rest.email,
+      firstname: data.firstname,
+      lastname: data.firstname,
+    });
+  });
+
+  // res.status(200).json({ auth: true, token: jwtToken, user: rest.email });
 };
 
 export const verifyToken = async ({ req, ...rest }) => {
