@@ -5,6 +5,7 @@ export const DropshippingQueries = {
     const allOffers = await knex("offers");
     return allOffers;
   },
+  getPhotos: async (categoryid: number) => {},
   getAllCategories: async () => {
     const allCategories = await knex("category");
     return allCategories;
