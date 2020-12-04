@@ -5,7 +5,12 @@ export const DropshippingQueries = {
     const allOffers = await knex("offers");
     return allOffers;
   },
-  getPhotos: async (categoryid: number) => {},
+  getPhotosByCategory: async (categoryid: number) => {
+    const photosByCategory = await knex("itemdetails").where({
+      categoryid,
+    });
+    return photosByCategory;
+  },
   getAllCategories: async () => {
     const allCategories = await knex("category");
     return allCategories;
@@ -20,6 +25,20 @@ export const DropshippingQueries = {
       .where({ category })
       .first();
     return singleCategory;
+  },
+  getOptions: async (categoryid: number) => {
+    const itemCategory = await knex("options")
+      .select(["id", "title", "option1", "option2", "option3", "option4"])
+      .where({ categoryid });
+    return itemCategory;
+  },
+  getItemAndCategory: async (itemid: number) => {
+    const itemCategory = await knex("itemdetails")
+      .join("category", "category.id", "=", "itemdetails.categoryid")
+      .select(["category.category", "itemdetails.option"])
+      .where({ itemid })
+      .first();
+    return itemCategory;
   },
   getItems: async () => {
     const items = await knex("itemdetails").select([

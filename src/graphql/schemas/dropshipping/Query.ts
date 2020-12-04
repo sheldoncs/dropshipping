@@ -8,5 +8,8 @@ export const Query = gql`
     getOffer(id: Int): Offer
     getAllItems: [ItemPrice!]
     getPriceOptions: [PriceOptions!]
+    getPhotosByCategory(categoryid: Int): [Photos!]
+    getItemAndCategory(itemid: Int): ItemAndCategory
+    getOptions(categoryid: Int): [Option!]
   }
 `;

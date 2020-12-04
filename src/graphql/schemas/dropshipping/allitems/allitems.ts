@@ -8,3 +8,9 @@ export const ItemProfile = gql`
     itemid: Int
   }
 `;
+export const ItemAndCategoryProfile = gql`
+  type ItemAndCategory {
+    option: String
+    category: String
+  }
+`;
