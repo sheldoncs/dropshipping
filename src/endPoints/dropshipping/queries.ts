@@ -42,7 +42,6 @@ export const DropshippingQueries = {
   },
   getItems: async () => {
     const items = await knex("itemdetails").select([
-      "itemdetails.id",
       "itemdetails.option",
       "itemdetails.photo",
       "itemdetails.itemid",
