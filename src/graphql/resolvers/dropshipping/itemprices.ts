@@ -5,7 +5,12 @@ export const getAllItems = async () => {
   return allItems;
 };
 
-export const getPriceOptions = async () => {
-  const priceOptions = await Queries.DropshippingQueries.getPriceOptions();
+export const getPriceOptions = async (
+  root: any,
+  args: { categoryid: number }
+) => {
+  const priceOptions = await Queries.DropshippingQueries.getPriceOptions(
+    args.categoryid
+  );
   return priceOptions;
 };

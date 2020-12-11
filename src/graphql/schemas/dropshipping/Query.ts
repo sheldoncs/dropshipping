@@ -7,7 +7,7 @@ export const Query = gql`
     getAllOffers: [Offer!]
     getOffer(id: Int): Offer
     getAllItems: [ItemPrice!]
-    getPriceOptions: [PriceOptions!]
+    getPriceOptions(categoryid: Int): [PriceOptions!]
     getPhotosByCategory(categoryid: Int): [Photos!]
     getItemAndCategory(itemid: Int): ItemAndCategory
     getOptions(categoryid: Int): [Option!]

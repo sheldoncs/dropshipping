@@ -4,7 +4,7 @@ export const PriceOptionsProfile = gql`
   type PriceOptions {
     id: ID
     hairlength: String
-    itemid: Int
+    categoryid: Int
     price: Float
   }
 `;

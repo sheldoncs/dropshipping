@@ -49,8 +49,8 @@ export const DropshippingQueries = {
 
     return items;
   },
-  getPriceOptions: async () => {
-    const priceOptions = await knex("itemprice");
+  getPriceOptions: async (categoryid: number) => {
+    const priceOptions = await knex("itemprice").where({ categoryid });
     return priceOptions;
   },
 };
