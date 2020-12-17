@@ -12,7 +12,7 @@ export const DropshippingQueries = {
     return photosByCategory;
   },
   getAllCategories: async () => {
-    const allCategories = await knex("category");
+    const allCategories = await knex("category").where({ status: 1 });
     return allCategories;
   },
   getOffer: async (id: number) => {
