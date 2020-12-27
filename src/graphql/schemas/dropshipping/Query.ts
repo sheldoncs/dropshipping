@@ -11,5 +11,6 @@ export const Query = gql`
     getPhotosByCategory(categoryid: Int): [Photos!]
     getItemAndCategory(itemid: Int): ItemAndCategory
     getOptions(categoryid: Int): [Option!]
+    getActiveChatters(active: Int): [ChatUser!]
   }
 `;

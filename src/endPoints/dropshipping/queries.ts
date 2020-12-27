@@ -5,6 +5,12 @@ export const DropshippingQueries = {
     const allOffers = await knex("offers");
     return allOffers;
   },
+  getActiveChatters: async (active: number) => {
+    const activeChatters = await knex("chatroom").where({
+      active,
+    });
+    return activeChatters;
+  },
   getPhotosByCategory: async (categoryid: number) => {
     const photosByCategory = await knex("itemdetails").where({
       categoryid,
@@ -14,6 +20,10 @@ export const DropshippingQueries = {
   getAllCategories: async () => {
     const allCategories = await knex("category").where({ status: 1 });
     return allCategories;
+  },
+  getChatUserByEmail: async (email: string) => {
+    const chatroom = await knex("chatroom").where({ email }).first();
+    return chatroom;
   },
   getOffer: async (id: number) => {
     const offer = await knex("offers").where({ id }).first();
@@ -41,16 +51,20 @@ export const DropshippingQueries = {
     return itemCategory;
   },
   getItems: async () => {
-    const items = await knex("itemdetails").select([
-      "itemdetails.option",
-      "itemdetails.photo",
-      "itemdetails.itemid",
-    ]);
+    const items = await knex("itemdetails")
+      .select(["itemdetails.option", "itemdetails.photo", "itemdetails.itemid"])
+      .where({ show: 1 });
 
     return items;
   },
   getPriceOptions: async (categoryid: number) => {
     const priceOptions = await knex("itemprice").where({ categoryid });
     return priceOptions;
+  },
+  addChatUser: async (user: object) => {
+    return await knex("chatroom").insert(user);
+  },
+  deactivateChatter: async (socketid) => {
+    return await knex("chatroom").where({ socketid }).update({ active: 0 });
   },
 };

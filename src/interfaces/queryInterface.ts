@@ -11,3 +11,10 @@ export interface UserInterface {
   country: string;
   isGoogle: number;
 }
+export interface chatClientInterface {
+  id?: number;
+  name: string;
+  email: string;
+  isadmin: number;
+  socketid: string;
+}

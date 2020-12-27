@@ -27,6 +27,7 @@ export const tokenGenerator = (req, res) => {
       user: rest.email,
       firstname: data.firstname,
       lastname: data.firstname,
+      admin: data.admin,
     });
   });
 

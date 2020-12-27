@@ -14,5 +14,14 @@ export const userMutation = gql`
       country: String
       isGoogle: Int
     ): CreateUserResponse
+
+    addChatUser(
+      name: String
+      email: String
+      isadmin: Int
+      active: Int
+    ): CreateChatUserResponse
+
+    deactivateActiveChatter(socketid: String): CreateSocketResponse
   }
 `;

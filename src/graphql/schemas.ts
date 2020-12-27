@@ -10,21 +10,34 @@ import {
   ItemAndCategoryProfile,
 } from "./schemas/dropshipping/allitems/allitems";
 import { userMutation } from "./schemas/dropshipping/mutation";
-import { CreateUserResponse } from "./schemas/dropshipping/user/user";
-import { UserProfile } from "./schemas/dropshipping/user/user";
+import {
+  UserProfile,
+  CreateUserResponse,
+} from "./schemas/dropshipping/user/user";
+import {
+  ChatUserProfile,
+  CreateChatUserResponse,
+  CreateSocketResponse,
+  socketProfile,
+} from "./schemas/dropshipping/chatUser/chatUser";
+
 import { PhotoProfile } from "./schemas/dropshipping/photos/photos";
 import { OptionProfile } from "./schemas/dropshipping/options/options";
 export const typeDefs = [
   Query,
   OptionProfile,
   CategoryProfile,
+  CreateSocketResponse,
+  socketProfile,
   PhotoProfile,
   MenuCategoryProfile,
   ItemProfile,
   ItemAndCategoryProfile,
   OfferProfile,
   CreateUserResponse,
+  CreateChatUserResponse,
   userMutation,
+  ChatUserProfile,
   UserProfile,
   PriceOptionsProfile,
 ];

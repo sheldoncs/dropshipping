@@ -3,7 +3,7 @@ import {
   getAllCategories,
 } from "./resolvers/dropshipping/category";
 import { getAllOffers, getOffer } from "./resolvers/dropshipping/offers";
-import { addUserInfo } from "./resolvers/dropshipping/user";
+import { addUserInfo, addChatUser } from "./resolvers/dropshipping/user";
 import { getItemAndCategory } from "./resolvers/dropshipping/itemandcategory";
 import {
   getAllItems,
@@ -11,6 +11,10 @@ import {
 } from "./resolvers/dropshipping/itemprices";
 import { getPhotosByCategory } from "./resolvers/dropshipping/photos";
 import { getOptions } from "./resolvers/dropshipping/options";
+import {
+  getActiveChatters,
+  deactivateActiveChatter,
+} from "./resolvers/dropshipping/chatters";
 
 export const resolvers = {
   Query: {
@@ -23,6 +27,7 @@ export const resolvers = {
     getAllItems,
     getPriceOptions,
     getOffer,
+    getActiveChatters,
   },
-  Mutation: { addUserInfo },
+  Mutation: { addUserInfo, addChatUser, deactivateActiveChatter },
 };
