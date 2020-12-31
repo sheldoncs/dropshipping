@@ -2,6 +2,10 @@ import {
   getCategory,
   getAllCategories,
 } from "./resolvers/dropshipping/category";
+import {
+  addLastIdentity,
+  getMaxIdentity,
+} from "./resolvers/dropshipping/lastidentity";
 import { getAllOffers, getOffer } from "./resolvers/dropshipping/offers";
 import { addUserInfo, addChatUser } from "./resolvers/dropshipping/user";
 import { getItemAndCategory } from "./resolvers/dropshipping/itemandcategory";
@@ -21,6 +25,7 @@ export const resolvers = {
     getOptions,
     getPhotosByCategory,
     getItemAndCategory,
+    getMaxIdentity,
     getCategory,
     getAllCategories,
     getAllOffers,
@@ -29,5 +34,10 @@ export const resolvers = {
     getOffer,
     getActiveChatters,
   },
-  Mutation: { addUserInfo, addChatUser, deactivateActiveChatter },
+  Mutation: {
+    addUserInfo,
+    addLastIdentity,
+    addChatUser,
+    deactivateActiveChatter,
+  },
 };

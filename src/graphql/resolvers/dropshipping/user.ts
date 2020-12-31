@@ -26,7 +26,6 @@ export const addUserInfo = async (root: any, payload: chatClientInterface) => {
 };
 
 export const addChatUser = async (root: any, payload: UserInterface) => {
-  console.log(payload.email);
   const findProfile = await Queries.DropshippingQueries.getChatUserByEmail(
     payload.email
   );

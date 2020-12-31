@@ -5,6 +5,16 @@ export const DropshippingQueries = {
     const allOffers = await knex("offers");
     return allOffers;
   },
+  getMaxIdentity: async () => {
+    const maxIdentity = await knex("lastidentity")
+      .max("lastidentityid as maxidentityid")
+      .first();
+
+    return maxIdentity;
+  },
+  addLastIdentity: async (lastidentity: object) => {
+    return await knex("lastidentity").insert(lastidentity);
+  },
   getActiveChatters: async (active: number) => {
     const activeChatters = await knex("chatroom").where({
       active,

@@ -13,6 +13,7 @@ export const userMutation = gql`
       zip: String
       country: String
       isGoogle: Int
+      admin: Int
     ): CreateUserResponse
 
     addChatUser(
@@ -21,6 +22,8 @@ export const userMutation = gql`
       isadmin: Int
       active: Int
     ): CreateChatUserResponse
+
+    addLastIdentity(lastidentityid: Int): CreateLastIdentityResponse
 
     deactivateActiveChatter(socketid: String): CreateSocketResponse
   }

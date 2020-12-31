@@ -18,3 +18,7 @@ export interface chatClientInterface {
   isadmin: number;
   socketid: string;
 }
+export interface lastIdentityInterface {
+  id?: number;
+  lastidentityid: number;
+}

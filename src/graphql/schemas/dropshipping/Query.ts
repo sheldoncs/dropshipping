@@ -12,5 +12,6 @@ export const Query = gql`
     getItemAndCategory(itemid: Int): ItemAndCategory
     getOptions(categoryid: Int): [Option!]
     getActiveChatters(active: Int): [ChatUser!]
+    getMaxIdentity: MaxIdentity
   }
 `;

@@ -23,16 +23,24 @@ import {
 
 import { PhotoProfile } from "./schemas/dropshipping/photos/photos";
 import { OptionProfile } from "./schemas/dropshipping/options/options";
+import {
+  maxIdentityProfile,
+  lastIdentityProfile,
+  CreateLastIdentityResponse,
+} from "./schemas/dropshipping/lastidentity/lastidentity";
 export const typeDefs = [
   Query,
   OptionProfile,
   CategoryProfile,
+  maxIdentityProfile,
   CreateSocketResponse,
   socketProfile,
   PhotoProfile,
   MenuCategoryProfile,
   ItemProfile,
   ItemAndCategoryProfile,
+  lastIdentityProfile,
+  CreateLastIdentityResponse,
   OfferProfile,
   CreateUserResponse,
   CreateChatUserResponse,
