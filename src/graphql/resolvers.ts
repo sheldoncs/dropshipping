@@ -6,9 +6,17 @@ import {
   addLastIdentity,
   getMaxIdentity,
 } from "./resolvers/dropshipping/lastidentity";
-import { getAllOffers, getOffer } from "./resolvers/dropshipping/offers";
+import {
+  getAllOffers,
+  getOffer,
+  getNonDiscountOffers,
+} from "./resolvers/dropshipping/offers";
 import { addUserInfo, addChatUser } from "./resolvers/dropshipping/user";
-import { getItemAndCategory } from "./resolvers/dropshipping/itemandcategory";
+import {
+  getItemAndCategory,
+  resetMainPhoto,
+  updateMainPhoto,
+} from "./resolvers/dropshipping/itemandcategory";
 import {
   getAllItems,
   getPriceOptions,
@@ -19,11 +27,15 @@ import {
   getActiveChatters,
   deactivateActiveChatter,
 } from "./resolvers/dropshipping/chatters";
+import { getAllCountries } from "./resolvers/dropshipping/countries";
+import { addOrders, getOrderList } from "./resolvers/dropshipping/orders";
 
 export const resolvers = {
   Query: {
     getOptions,
+    getOrderList,
     getPhotosByCategory,
+    getAllCountries,
     getItemAndCategory,
     getMaxIdentity,
     getCategory,
@@ -32,6 +44,7 @@ export const resolvers = {
     getAllItems,
     getPriceOptions,
     getOffer,
+    getNonDiscountOffers,
     getActiveChatters,
   },
   Mutation: {
@@ -39,5 +52,8 @@ export const resolvers = {
     addLastIdentity,
     addChatUser,
     deactivateActiveChatter,
+    resetMainPhoto,
+    updateMainPhoto,
+    addOrders,
   },
 };

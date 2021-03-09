@@ -1,6 +1,8 @@
-import { gql } from "apollo-server-express";
-
-export const userMutation = gql`
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.userMutation = void 0;
+const apollo_server_express_1 = require("apollo-server-express");
+exports.userMutation = apollo_server_express_1.gql `
   type Mutation {
     addUserInfo(
       username: String

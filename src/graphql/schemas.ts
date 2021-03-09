@@ -8,6 +8,10 @@ import { Query } from "./schemas/dropshipping/query";
 import {
   ItemProfile,
   ItemAndCategoryProfile,
+  UpdateMainPhotoProfile,
+  ResetMainPhotoProfile,
+  ResetMainPhotoResponse,
+  UpdateMainPhotoResponse,
 } from "./schemas/dropshipping/allitems/allitems";
 import { userMutation } from "./schemas/dropshipping/mutation";
 import {
@@ -28,6 +32,12 @@ import {
   lastIdentityProfile,
   CreateLastIdentityResponse,
 } from "./schemas/dropshipping/lastidentity/lastidentity";
+import { CountryProfile } from "./schemas/dropshipping/countries/countries";
+import {
+  OrderProfile,
+  CreateOrderResponse,
+} from "./schemas/dropshipping/order/order";
+
 export const typeDefs = [
   Query,
   OptionProfile,
@@ -35,6 +45,7 @@ export const typeDefs = [
   maxIdentityProfile,
   CreateSocketResponse,
   socketProfile,
+  CountryProfile,
   PhotoProfile,
   MenuCategoryProfile,
   ItemProfile,
@@ -43,9 +54,15 @@ export const typeDefs = [
   CreateLastIdentityResponse,
   OfferProfile,
   CreateUserResponse,
+  CreateOrderResponse,
   CreateChatUserResponse,
+  ResetMainPhotoResponse,
+  UpdateMainPhotoResponse,
+  UpdateMainPhotoProfile,
+  ResetMainPhotoProfile,
   userMutation,
   ChatUserProfile,
   UserProfile,
   PriceOptionsProfile,
+  OrderProfile,
 ];

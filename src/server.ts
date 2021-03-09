@@ -18,7 +18,7 @@ import "dotenv/config";
 import * as dotenv from "dotenv";
 import { Signup, localPassport } from "./auth/localPassport";
 import { GooglePassport } from "./auth/googlePassport";
-import bodyParser from "body-parser";
+// import bodyParser from "body-parser";
 import { addChatUser } from "./local/insertData";
 
 localPassport;
@@ -43,13 +43,24 @@ app.use(
 );
 app.use(logger("dev"));
 
-var corsOptions = {
-  origin: "*",
-  optionsSuccessStatus: 200, // For legacy browser support
-  methods: "GET",
-};
+app.use(function (request, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
+  //intercept the OPTIONS call so we don't double up on calls to the integration
+  if ("OPTIONS" === request.method) {
+    res.send(200);
+  } else {
+    next();
+  }
+});
 
-app.use(bodyParser.urlencoded({ extended: true }));
+// var corsOptions = {
+//   origin: "*",
+//   optionsSuccessStatus: 200, // For legacy browser support
+//   methods: "GET",
+// };
+
+// app.use(bodyParser.urlencoded({ extended: true, limit: "1000mb" }));
 
 // app.get(
 //   "/auth/google",
@@ -84,7 +95,6 @@ const apolloServer = new ApolloServer({
 apolloServer.applyMiddleware({ app, path: "/graphql" });
 
 const port = process.env.PORT || 4000;
-
 // app.listen(port, () =>
 //   console.log(
 //     `\nGraphQL Server running on ---> http://localhost:${port}/graphql\n`
@@ -92,7 +102,7 @@ const port = process.env.PORT || 4000;
 // );
 
 // var server = reqHttp.createServer(app);
-app.get("/", (req, res) => {
+app.get("/order", (req, res) => {
   res.send("<div>Welcome</div>");
 });
 
@@ -103,6 +113,7 @@ server.listen(port, () => {
     `\nGraphQL and chat Server running on ---> http://localhost:${port}/graphql\n`
   );
 });
+
 // let io = socket(server);
 
 let io = require("socket.io")(server, {

@@ -14,5 +14,6 @@ export const MenuCategoryProfile = gql`
   type Menu {
     id: ID
     category: String
+    comments: String
   }
 `;

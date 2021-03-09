@@ -11,6 +11,15 @@ export interface UserInterface {
   country: string;
   isGoogle: number;
 }
+export interface OrderInterface {
+  id?: number;
+  itemid: number;
+  categoryid: number;
+  orderid: number;
+  quantity: number;
+  totalprice: number;
+  photo: string;
+}
 export interface chatClientInterface {
   id?: number;
   name: string;

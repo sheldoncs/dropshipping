@@ -1,5 +1,8 @@
-import { gql } from "apollo-server-express";
-export const Query = gql`
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Query = void 0;
+const apollo_server_express_1 = require("apollo-server-express");
+exports.Query = apollo_server_express_1.gql `
   # All database queries
   type Query {
     getCategory(category: String): Category
