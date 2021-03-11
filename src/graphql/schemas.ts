@@ -4,7 +4,7 @@ import {
 } from "./schemas/dropshipping/category/category";
 import { OfferProfile } from "./schemas/dropshipping/offer/offer";
 import { PriceOptionsProfile } from "./schemas/dropshipping/priceoptions/priceoptions";
-import { Query } from "./schemas/dropshipping/query";
+import { Query } from "./schemas/dropshipping/Query";
 import {
   ItemProfile,
   ItemAndCategoryProfile,
