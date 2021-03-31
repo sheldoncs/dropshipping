@@ -5,7 +5,7 @@ import cors from "cors";
 import helmet from "helmet";
 import passport from "passport";
 import compression from "compression";
-
+import { Pool } from "pg";
 // import multer from "multer";
 
 import { resolvers } from "./graphql/resolvers";
@@ -23,6 +23,15 @@ import { addChatUser } from "./local/insertData";
 
 localPassport;
 GooglePassport;
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
+});
+
+pool.on("connect", () => {
+  console.log("connected to the db");
+});
 
 dotenv.config();
 const app = express();
@@ -42,17 +51,6 @@ app.use(
   })
 );
 app.use(logger("dev"));
-
-app.use(function (request, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "*");
-  //intercept the OPTIONS call so we don't double up on calls to the integration
-  if ("OPTIONS" === request.method) {
-    res.send(200);
-  } else {
-    next();
-  }
-});
 
 // var corsOptions = {
 //   origin: "*",
@@ -88,7 +86,7 @@ app.post(
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
-  context: verifyToken,
+  // context: verifyToken,
   debug: false,
 });
 
@@ -127,49 +125,5 @@ io.on("connection", (socket) => {
 
   socket.on("message", (body) => {
     io.emit("message", body);
-  });
-
-  socket.on("nameandemail", (data) => {
-    data.socketid = socket.id;
-    addChatUser(data);
-    // try {
-    //   socket.join(data.socketid);
-    //   console.log(data);
-    //   io.emit("chatroom", {
-    //     email: data.email,
-    //     type: "status",
-    //     text: "Is now connected",
-    //     created: Date.now(),
-    //   });
-    // } catch (e) {
-    //   console.log("[error]", "join room :", e);
-    //   socket.emit("error", "couldnt perform requested action");
-    // }
-  });
-
-  socket.on("join", function (data) {
-    socket.join(data.email); // We are using room of socket io
-
-    // io.sockets.in(data.email).emit("message", {
-    //   // Emits a status message to the connect room when a socket client is connected
-    //   type: "status",
-    //   text: "Is now connected",
-    //   created: Date.now(),
-    // });
-  });
-  socket.on("sendtoclient", function (data) {
-    io.sockets.in(data.email).emit("new_msg", {
-      name: data.name,
-      msg: data.message,
-    });
-  });
-  socket.on("sendtoadmin", function (data) {
-    console.log(data);
-
-    socket.to(data.email).emit("to_admin_msg", {
-      name: data.name,
-      msg: data.msg,
-      socketid: data.socketid,
-    });
   });
 });

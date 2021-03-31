@@ -25,6 +25,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const apollo_server_express_1 = require("apollo-server-express");
 const morgan_1 = __importDefault(require("morgan"));
+const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
 const passport_1 = __importDefault(require("passport"));
 const compression_1 = __importDefault(require("compression"));
@@ -45,7 +46,7 @@ const app = express_1.default();
 app.use(express_1.default.json());
 app.use(passport_1.default.initialize());
 app.use(compression_1.default());
-// app.use(cors());
+app.use(cors_1.default());
 var router = express_1.default.Router();
 app.use(express_1.default.static(__dirname + "/public"));
 app.use(helmet_1.default({
