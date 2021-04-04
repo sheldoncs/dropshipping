@@ -4,7 +4,6 @@ exports.typeDefs = void 0;
 const category_1 = require("./schemas/dropshipping/category/category");
 const offer_1 = require("./schemas/dropshipping/offer/offer");
 const priceoptions_1 = require("./schemas/dropshipping/priceoptions/priceoptions");
-const query_1 = require("./schemas/dropshipping/query");
 const allitems_1 = require("./schemas/dropshipping/allitems/allitems");
 const mutation_1 = require("./schemas/dropshipping/mutation");
 const user_1 = require("./schemas/dropshipping/user/user");
@@ -14,6 +13,7 @@ const options_1 = require("./schemas/dropshipping/options/options");
 const lastidentity_1 = require("./schemas/dropshipping/lastidentity/lastidentity");
 const countries_1 = require("./schemas/dropshipping/countries/countries");
 const order_1 = require("./schemas/dropshipping/order/order");
+const query_1 = require("./schemas/dropshipping/query");
 exports.typeDefs = [
     query_1.Query,
     options_1.OptionProfile,

@@ -25,9 +25,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const apollo_server_express_1 = require("apollo-server-express");
 const morgan_1 = __importDefault(require("morgan"));
+const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
 const passport_1 = __importDefault(require("passport"));
 const compression_1 = __importDefault(require("compression"));
+const pg_1 = require("pg");
 // import multer from "multer";
 const resolvers_1 = require("./graphql/resolvers");
 const schemas_1 = require("./graphql/schemas");
@@ -36,59 +38,33 @@ require("dotenv/config");
 const dotenv = __importStar(require("dotenv"));
 const localPassport_1 = require("./auth/localPassport");
 const googlePassport_1 = require("./auth/googlePassport");
-// import bodyParser from "body-parser";
-const insertData_1 = require("./local/insertData");
 localPassport_1.localPassport;
 googlePassport_1.GooglePassport;
+const pool = new pg_1.Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false },
+});
+pool.on("connect", () => {
+    console.log("connected to the db");
+});
 dotenv.config();
 const app = express_1.default();
 app.use(express_1.default.json());
 app.use(passport_1.default.initialize());
 app.use(compression_1.default());
-// app.use(cors());
+app.use(cors_1.default());
 var router = express_1.default.Router();
 app.use(express_1.default.static(__dirname + "/public"));
 app.use(helmet_1.default({
     contentSecurityPolicy: process.env.NODE_ENV === "production" ? undefined : false,
 }));
 app.use(morgan_1.default("dev"));
-app.use(function (request, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "*");
-    //intercept the OPTIONS call so we don't double up on calls to the integration
-    if ("OPTIONS" === request.method) {
-        res.send(200);
-    }
-    else {
-        next();
-    }
-});
-// var corsOptions = {
-//   origin: "*",
-//   optionsSuccessStatus: 200, // For legacy browser support
-//   methods: "GET",
-// };
-// app.use(bodyParser.urlencoded({ extended: true, limit: "1000mb" }));
-// app.get(
-//   "/auth/google",
-//   passport.authenticate("google", { scope: ["profile", "email"] })
-// );
-// // ,
-// //   function (req, res) {
-// //     // Successful authentication, redirect success.
-// //     res.redirect("/success");
-// //   }
-// app.get(
-//   "/auth/google/callback",
-//   passport.authenticate("google", { session: false, failureRedirect: "/" }),
-//   tokenGenerator
-// );
 app.post("/auth/signup", localPassport_1.Signup);
 app.post("/login", passport_1.default.authenticate("local", { session: false }), authHandlers_1.tokenGenerator);
 const apolloServer = new apollo_server_express_1.ApolloServer({
     typeDefs: schemas_1.typeDefs,
     resolvers: resolvers_1.resolvers,
-    context: authHandlers_1.verifyToken,
+    // context: verifyToken,
     debug: false,
 });
 apolloServer.applyMiddleware({ app, path: "/graphql" });
@@ -116,45 +92,5 @@ io.on("connection", (socket) => {
     console.log("connection made");
     socket.on("message", (body) => {
         io.emit("message", body);
-    });
-    socket.on("nameandemail", (data) => {
-        data.socketid = socket.id;
-        insertData_1.addChatUser(data);
-        // try {
-        //   socket.join(data.socketid);
-        //   console.log(data);
-        //   io.emit("chatroom", {
-        //     email: data.email,
-        //     type: "status",
-        //     text: "Is now connected",
-        //     created: Date.now(),
-        //   });
-        // } catch (e) {
-        //   console.log("[error]", "join room :", e);
-        //   socket.emit("error", "couldnt perform requested action");
-        // }
-    });
-    socket.on("join", function (data) {
-        socket.join(data.email); // We are using room of socket io
-        // io.sockets.in(data.email).emit("message", {
-        //   // Emits a status message to the connect room when a socket client is connected
-        //   type: "status",
-        //   text: "Is now connected",
-        //   created: Date.now(),
-        // });
-    });
-    socket.on("sendtoclient", function (data) {
-        io.sockets.in(data.email).emit("new_msg", {
-            name: data.name,
-            msg: data.message,
-        });
-    });
-    socket.on("sendtoadmin", function (data) {
-        console.log(data);
-        socket.to(data.email).emit("to_admin_msg", {
-            name: data.name,
-            msg: data.msg,
-            socketid: data.socketid,
-        });
     });
 });
