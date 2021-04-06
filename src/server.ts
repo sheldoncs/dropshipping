@@ -1,5 +1,6 @@
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
+// import { ApolloServer } from "apollo-server";
 import logger from "morgan";
 import cors from "cors";
 import helmet from "helmet";
@@ -24,15 +25,6 @@ import { addChatUser } from "./local/insertData";
 localPassport;
 GooglePassport;
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
-});
-
-pool.on("connect", () => {
-  console.log("connected to the db");
-});
-
 dotenv.config();
 const app = express();
 
@@ -50,30 +42,8 @@ app.use(
       process.env.NODE_ENV === "production" ? undefined : false,
   })
 );
+
 app.use(logger("dev"));
-
-// var corsOptions = {
-//   origin: "*",
-//   optionsSuccessStatus: 200, // For legacy browser support
-//   methods: "GET",
-// };
-
-// app.use(bodyParser.urlencoded({ extended: true, limit: "1000mb" }));
-
-// app.get(
-//   "/auth/google",
-//   passport.authenticate("google", { scope: ["profile", "email"] })
-// );
-// // ,
-// //   function (req, res) {
-// //     // Successful authentication, redirect success.
-// //     res.redirect("/success");
-// //   }
-// app.get(
-//   "/auth/google/callback",
-//   passport.authenticate("google", { session: false, failureRedirect: "/" }),
-//   tokenGenerator
-// );
 
 app.post("/auth/signup", Signup);
 
@@ -88,11 +58,15 @@ const apolloServer = new ApolloServer({
   resolvers,
   // context: verifyToken,
   debug: false,
+  introspection: true,
+  // playground: { version: "1.7.25" },
+  playground: true,
 });
 
 apolloServer.applyMiddleware({ app, path: "/graphql" });
 
 const port = process.env.PORT || 4000;
+
 // app.listen(port, () =>
 //   console.log(
 //     `\nGraphQL Server running on ---> http://localhost:${port}/graphql\n`
@@ -115,7 +89,8 @@ server.listen(port, () => {
 // let io = socket(server);
 
 let io = require("socket.io")(server, {
-  cors: "http://localhost:3000",
+  // cors: "http://localhost:3000",
+  cors: "https://sellers-frontend.herokuapp.com/",
   methods: ["GET", "POST"],
 });
 

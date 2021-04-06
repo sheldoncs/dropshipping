@@ -4,7 +4,7 @@ module.exports = {
     development: {
         client: "mysql",
         // connection: "mysql://admin:kentish@localhost:3306/sellers",
-        connection: process.env.DATABASE_URI,
+        connection: process.env.DATABASE_URL,
         migrations: {
             directory: `./src/data/migrations`,
         },
@@ -15,7 +15,7 @@ module.exports = {
     },
     production: {
         client: "pg",
-        connection: process.env.DATABASE_URI,
+        connection: process.env.DATABASE_URL,
         migrations: {
             directory: `${__dirname}/src/dats/migrations`,
         },

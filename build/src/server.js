@@ -24,12 +24,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const apollo_server_express_1 = require("apollo-server-express");
+// import { ApolloServer } from "apollo-server";
 const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
 const passport_1 = __importDefault(require("passport"));
 const compression_1 = __importDefault(require("compression"));
-const pg_1 = require("pg");
 // import multer from "multer";
 const resolvers_1 = require("./graphql/resolvers");
 const schemas_1 = require("./graphql/schemas");
@@ -40,13 +40,6 @@ const localPassport_1 = require("./auth/localPassport");
 const googlePassport_1 = require("./auth/googlePassport");
 localPassport_1.localPassport;
 googlePassport_1.GooglePassport;
-const pool = new pg_1.Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false },
-});
-pool.on("connect", () => {
-    console.log("connected to the db");
-});
 dotenv.config();
 const app = express_1.default();
 app.use(express_1.default.json());
@@ -66,6 +59,9 @@ const apolloServer = new apollo_server_express_1.ApolloServer({
     resolvers: resolvers_1.resolvers,
     // context: verifyToken,
     debug: false,
+    introspection: true,
+    // playground: { version: "1.7.25" },
+    playground: true,
 });
 apolloServer.applyMiddleware({ app, path: "/graphql" });
 const port = process.env.PORT || 4000;

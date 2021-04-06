@@ -1,5 +1,2 @@
-node_modules/
-.DS_Store
-src/.DS_Store
-lib
-.env
+"node_modules" 
+node_modules

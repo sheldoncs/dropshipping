@@ -1,0 +1,2 @@
+set PGPASSWORD=kentish
+pg_dump -C -h localhost -U postgres sellers | psql -h ec2-52-21-252-142.compute-1.amazonaws.com -U zjykvterfufswe --password da1f934d489b13875e4789a122e0fb3a169c33ceeac69bad4da5c3158f1c1024 
